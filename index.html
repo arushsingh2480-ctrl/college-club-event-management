@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>The Commons – College Club Events</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=DM+Sans:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f6f4fb;
+            --surf: #fff;
+            --ink: #1b1340;
+            --mute: #6a6488;
+            --line: #e0dcef;
+            --pri: #5b3df5;
+            --pri-ink: #fff;
+            --acc: #c8f169;
+            --acc-ink: #1b1340;
+            --bad: #c62a4d;
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px)
+        }
+
+        @media(prefers-color-scheme:dark) {
+            :root:not([data-theme="light"]) {
+                --bg: #0f0b24;
+                --surf: #191433;
+                --ink: #f0edff;
+                --mute: #a49fc6;
+                --line: #2e2757;
+                --pri: #8b76ff;
+                --pri-ink: #0f0b24;
+                --bad: #ff7a96
+            }
+        }
+
+        :root[data-theme="dark"] {
+            --bg: #0f0b24;
+            --surf: #191433;
+            --ink: #f0edff;
+            --mute: #a49fc6;
+            --line: #2e2757;
+            --pri: #8b76ff;
+            --pri-ink: #0f0b24;
+            --bad: #ff7a96
+        }
+
+        html {
+            scroll-padding-top: env(safe-area-inset-top, 0px)
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font: 16px/1.55 'DM Sans', system-ui, sans-serif
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Bricolage Grotesque', 'DM Sans', system-ui, sans-serif;
+            line-height: 1.1;
+            margin: 0
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font: inherit;
+            color: inherit
+        }
+
+        :focus-visible {
+            outline: 3px solid var(--pri);
+            outline-offset: 2px
+        }
+
+        .wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px
+        }
+
+        header {
+            position: sticky;
+            top: env(safe-area-inset-top, 0px);
+            z-index: 10;
+            background: var(--bg);
+            border-bottom: 1px solid var(--line)
+        }
+
+        header .wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            height: 62px
+        }
+
+        .logo {
+            font: 800 1.3rem 'Bricolage Grotesque', sans-serif;
+            text-decoration: none;
+            color: var(--ink)
+        }
+
+        .logo i {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            background: var(--acc);
+            border: 3px solid var(--pri);
+            border-radius: 50%;
+            margin-right: 8px
+        }
+
+        nav {
+            display: flex;
+            gap: 4px
+        }
+
+        nav a {
+            padding: 8px 14px;
+            border-radius: 99px;
+            text-decoration: none;
+            color: var(--mute);
+            font-weight: 500
+        }
+
+        nav a.on {
+            background: var(--ink);
+            color: var(--bg)
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            border: 2px solid var(--ink);
+            background: transparent;
+            padding: 9px 18px;
+            border-radius: 99px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none
+        }
+
+        .btn.p {
+            background: var(--pri);
+            border-color: var(--pri);
+            color: var(--pri-ink)
+        }
+
+        .btn.s {
+            padding: 5px 12px;
+            font-size: .88rem
+        }
+
+        .btn.d {
+            border-color: var(--bad);
+            color: var(--bad)
+        }
+
+        .hero {
+            padding: 56px 0 40px;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 32px;
+            align-items: center
+        }
+
+        .hero h1 {
+            font-size: clamp(2.4rem, 6vw, 4.4rem);
+            font-weight: 800;
+            letter-spacing: -.03em
+        }
+
+        .hero p {
+            color: var(--mute);
+            max-width: 46ch;
+            font-size: 1.1rem;
+            margin: 18px 0 24px
+        }
+
+        .stats {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap
+        }
+
+        .stats span {
+            border: 1.5px solid var(--line);
+            border-radius: 12px;
+            padding: 8px 14px;
+            background: var(--surf)
+        }
+
+        .stats b {
+            font: 800 1.4rem 'Bricolage Grotesque', sans-serif;
+            display: block
+        }
+
+        .feat {
+            background: var(--pri);
+            color: var(--pri-ink);
+            border-radius: 24px;
+            padding: 28px;
+            position: relative;
+            overflow: hidden
+        }
+
+        .feat .tag {
+            background: var(--acc);
+            color: var(--acc-ink);
+            font-weight: 700;
+            font-size: .85rem;
+            padding: 4px 12px;
+            border-radius: 99px;
+            display: inline-block
+        }
+
+        .feat h2 {
+            font-size: 2rem;
+            margin: 16px 0 8px
+        }
+
+        .feat p {
+            margin: 0 0 18px;
+            opacity: .9
+        }
+
+        .feat .btn {
+            background: var(--acc);
+            border-color: var(--acc);
+            color: var(--acc-ink)
+        }
+
+        section.blk {
+            padding: 28px 0
+        }
+
+        .sh {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            margin-bottom: 18px;
+            gap: 12px
+        }
+
+        .sh h2 {
+            font-size: 1.8rem
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+            gap: 18px
+        }
+
+        .card {
+            background: var(--surf);
+            border: 1.5px solid var(--line);
+            border-radius: 18px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden
+        }
+
+        .card .top {
+            display: flex;
+            gap: 14px;
+            padding: 18px 18px 12px;
+            align-items: flex-start
+        }
+
+        .date {
+            flex: none;
+            width: 60px;
+            text-align: center;
+            background: var(--bg);
+            border: 1.5px solid var(--ink);
+            border-radius: 12px;
+            padding: 6px 0
+        }
+
+        .date b {
+            font: 800 1.6rem/1 'Bricolage Grotesque', sans-serif;
+            display: block
+        }
+
+        .date small {
+            font-size: .78rem;
+            color: var(--mute);
+            font-weight: 700
+        }
+
+        .card h3 {
+            font-size: 1.2rem
+        }
+
+        .cat {
+            display: inline-block;
+            font-size: .78rem;
+            font-weight: 700;
+            background: var(--acc);
+            color: var(--acc-ink);
+            padding: 2px 10px;
+            border-radius: 99px;
+            margin-bottom: 6px
+        }
+
+        .card .bd {
+            padding: 0 18px;
+            color: var(--mute);
+            font-size: .95rem;
+            flex: 1
+        }
+
+        .meta {
+            margin: 0 0 8px;
+            color: var(--ink);
+            font-size: .92rem
+        }
+
+        .card .ft {
+            border-top: 2px dashed var(--line);
+            margin-top: 14px;
+            padding: 12px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px
+        }
+
+        .ft small {
+            color: var(--mute)
+        }
+
+        .bar {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px
+        }
+
+        input,
+        select,
+        textarea {
+            background: var(--surf);
+            border: 1.5px solid var(--line);
+            border-radius: 12px;
+            padding: 10px 14px;
+            width: 100%
+        }
+
+        .bar input {
+            flex: 2 1 240px;
+            width: auto
+        }
+
+        .bar select {
+            flex: 1 1 160px;
+            width: auto
+        }
+
+        .chips {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 20px
+        }
+
+        .chip {
+            border: 1.5px solid var(--line);
+            background: var(--surf);
+            border-radius: 99px;
+            padding: 5px 14px;
+            cursor: pointer;
+            font-weight: 500
+        }
+
+        .chip.on {
+            background: var(--ink);
+            color: var(--bg);
+            border-color: var(--ink)
+        }
+
+        .empty {
+            padding: 40px;
+            text-align: center;
+            color: var(--mute);
+            border: 2px dashed var(--line);
+            border-radius: 18px
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 11, 36, .6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            z-index: 50
+        }
+
+        .modal>div {
+            background: var(--surf);
+            border-radius: 20px;
+            padding: 24px;
+            width: 100%;
+            max-width: 480px;
+            max-height: 92vh;
+            overflow: auto
+        }
+
+        .modal h2 {
+            font-size: 1.5rem;
+            margin-bottom: 4px
+        }
+
+        label {
+            display: block;
+            font-weight: 700;
+            font-size: .9rem;
+            margin: 14px 0 5px
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px
+        }
+
+        .err {
+            color: var(--bad);
+            font-size: .85rem;
+            min-height: 1em
+        }
+
+        .acts {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px
+        }
+
+        .toast {
+            position: fixed;
+            left: 50%;
+            bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+            transform: translateX(-50%);
+            background: var(--ink);
+            color: var(--bg);
+            padding: 12px 22px;
+            border-radius: 99px;
+            z-index: 60;
+            font-weight: 500
+        }
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin: 20px 0
+        }
+
+        .tw {
+            overflow-x: auto;
+            border: 1.5px solid var(--line);
+            border-radius: 16px;
+            background: var(--surf)
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            min-width: 640px
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--line);
+            font-size: .93rem;
+            vertical-align: top
+        }
+
+        th {
+            color: var(--mute);
+            font-size: .85rem
+        }
+
+        tr:last-child td {
+            border-bottom: 0
+        }
+
+        .login {
+            max-width: 380px;
+            margin: 60px auto
+        }
+
+        footer {
+            padding: 36px 0;
+            color: var(--mute);
+            font-size: .9rem;
+            text-align: center
+        }
+
+        @media(max-width:760px) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding-top: 32px
+            }
+
+            .row {
+                grid-template-columns: 1fr
+            }
+
+            .logo span {
+                display: none
+            }
+        }
+
+        @media(prefers-reduced-motion:no-preference) {
+            .modal>div {
+                animation: pop .2s ease-out
+            }
+
+            @keyframes pop {
+                from {
+                    transform: translateY(12px);
+                    opacity: 0
+                }
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="wrap">
+            <a class="logo" href="#/"><i></i><span>The Commons</span></a>
+            <nav><a href="#/" data-r="">Home</a><a href="#/events" data-r="events">Events</a><a href="#/admin"
+                    data-r="admin">Admin</a></nav>
+        </div>
+    </header>
+    <main class="wrap" id="app"></main>
+    <footer class="wrap">The Commons Student Club · Open to every department and year</footer>
+    <div id="layer"></div>
+
+    <script>
+        const CATS = ['Tech', 'Cultural', 'Sports', 'Workshop', 'Social'];
+        const $ = s => document.querySelector(s);
+        const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+        const store = { get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d } catch (e) { return d } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)) } catch (e) { } } };
+        const day = n => { const d = new Date(); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10) };
+        const seed = () => [
+            { id: 1, name: 'Hack the Quad 24h Hackathon', date: day(9), time: '10:00', venue: 'Main Auditorium', cat: 'Tech', desc: 'Teams of four build a campus-problem solution in 24 hours. Mentors, snacks and prizes included.', featured: true },
+            { id: 2, name: 'Open Mic Night', date: day(3), time: '18:30', venue: 'Amphitheatre', cat: 'Cultural', desc: 'Poetry, music, stand-up. Sign up on the spot or just cheer from the steps.', featured: false },
+            { id: 3, name: 'Intro to Git & GitHub', date: day(5), time: '14:00', venue: 'Lab 204', cat: 'Workshop', desc: 'Hands-on session for first-years: commits, branches and your first pull request.', featured: false },
+            { id: 4, name: 'Inter-Department Football Cup', date: day(14), time: '16:00', venue: 'Sports Ground', cat: 'Sports', desc: 'Five-a-side knockout. Register your department squad of up to eight players.', featured: false },
+            { id: 5, name: 'Freshers Meet & Potluck', date: day(1), time: '17:00', venue: 'Canteen Lawn', cat: 'Social', desc: 'Meet club leads, pick your teams and bring a dish to share.', featured: false },
+            { id: 6, name: 'Design Sprint Workshop', date: day(20), time: '11:00', venue: 'Seminar Hall B', cat: 'Workshop', desc: 'Take an idea from sketch to clickable prototype in one afternoon.', featured: false }];
+        let events = store.get('ce_events', null) || seed();
+        let regs = store.get('ce_regs', []);
+        let admin = false, adminTab = 'events', rq = '', rev = '', q = '', cat = 'All';
+        const save = () => { store.set('ce_events', events); store.set('ce_regs', regs) };
+        save();
+        const fmt = e => { const d = new Date(e.date + 'T' + (e.time || '00:00')); return { d: d.getDate(), m: d.toLocaleString('en', { month: 'short' }), full: d.toLocaleDateString('en', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }), t: d.toLocaleTimeString('en', { hour: 'numeric', minute: '2-digit' }) } };
+        const upcoming = () => [...events].sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time));
+        const count = id => regs.filter(r => r.eventId === id).length;
+
+        function card(e) {
+            const f = fmt(e); return `<article class="card"><div class="top"><div class="date"><b>${f.d}</b><small>${f.m}</small></div><div><span class="cat">${esc(e.cat)}</span><h3>${esc(e.name)}</h3></div></div>
+<div class="bd"><p class="meta">🕒 ${f.full}, ${f.t}<br>📍 ${esc(e.venue)}</p><p style="margin:0">${esc(e.desc)}</p></div>
+<div class="ft"><small>${count(e.id)} registered</small><button class="btn p s" data-reg="${e.id}">Register</button></div></article>`
+        }
+
+        function home() {
+            const s = upcoming(); const f = s.find(e => e.featured) || s[0];
+            return `<section class="hero"><div><h1>Show up. Join in. Make campus yours.</h1><p>The Commons is the student club that runs hackathons, workshops, open mics and matches for every department. Find an event and save your seat in under a minute.</p>
+ <div class="stats"><span><b>${events.length}</b>events planned</span><span><b>${regs.length}</b>students signed up</span><span><b>${CATS.length}</b>categories</span></div></div>
+ ${f ? `<div class="feat"><span class="tag">Featured event</span><h2>${esc(f.name)}</h2><p>${fmt(f).full} at ${fmt(f).t} · ${esc(f.venue)}</p><p>${esc(f.desc)}</p><button class="btn" data-reg="${f.id}">Save my seat</button></div>` : ''}</section>
+ <section class="blk"><div class="sh"><h2>Upcoming events</h2><a class="btn s" href="#/events">See all events</a></div>
+ <div class="grid">${s.slice(0, 3).map(card).join('') || '<div class="empty">No events yet. Check back soon.</div>'}</div></section>`
+        }
+
+        function eventsPage() {
+            return `<section class="blk"><div class="sh"><h2>All events</h2></div>
+ <div class="bar"><input id="q" type="search" placeholder="Search events by name" value="${esc(q)}" aria-label="Search events">
+ <select id="cat" aria-label="Filter by category"><option>All</option>${CATS.map(c => `<option ${c === cat ? 'selected' : ''}>${c}</option>`).join('')}</select></div>
+ <div class="chips">${['All', ...CATS].map(c => `<button class="chip ${c === cat ? 'on' : ''}" data-cat="${c}">${c}</button>`).join('')}</div>
+ <div class="grid" id="list"></div></section>`}
+        function fillList() {
+            const l = upcoming().filter(e => (cat === 'All' || e.cat === cat) && e.name.toLowerCase().includes(q.toLowerCase()));
+            $('#list').innerHTML = l.map(card).join('') || '<div class="empty" style="grid-column:1/-1">No events match. Clear the search or pick another category.</div>'
+        }
+
+        function adminPage() {
+            if (!admin) return `<div class="login card" style="padding:26px"><h2>Admin sign in</h2><p style="color:var(--mute)">Demo passcode: <b>admin123</b></p><label for="pw">Passcode</label><input id="pw" type="password"><div class="err" id="pe"></div><div class="acts"><button class="btn p" id="go">Sign in</button></div></div>`;
+            const tabs = `<div class="sh"><h2>Admin dashboard</h2><button class="btn s" id="out">Sign out</button></div><div class="tabs"><button class="chip ${adminTab === 'events' ? 'on' : ''}" data-tab="events">Events (${events.length})</button><button class="chip ${adminTab === 'regs' ? 'on' : ''}" data-tab="regs">Registrations (${regs.length})</button></div>`;
+            if (adminTab === 'events') return `<section class="blk">${tabs}<div style="margin-bottom:14px"><button class="btn p" id="add">Add event</button></div><div class="tw"><table><tr><th>Event</th><th>Date & time</th><th>Venue</th><th>Category</th><th>Signups</th><th></th></tr>
+ ${upcoming().map(e => `<tr><td><b>${esc(e.name)}</b>${e.featured ? ' <span class="cat">Featured</span>' : ''}</td><td>${fmt(e).full}<br>${fmt(e).t}</td><td>${esc(e.venue)}</td><td>${esc(e.cat)}</td><td>${count(e.id)}</td><td style="white-space:nowrap"><button class="btn s" data-edit="${e.id}">Edit</button> <button class="btn s d" data-del="${e.id}">Delete</button></td></tr>`).join('') || '<tr><td colspan="6">No events. Add your first one.</td></tr>'}</table></div></section>`;
+            return `<section class="blk">${tabs}<div class="bar"><input id="rq" type="search" placeholder="Search by name, email or college" value="${esc(rq)}" aria-label="Search registrations"><select id="rev" aria-label="Filter by event"><option value="">All events</option>${events.map(e => `<option value="${e.id}" ${String(e.id) === rev ? 'selected' : ''}>${esc(e.name)}</option>`).join('')}</select></div><div class="tw" id="rt"></div></section>`
+        }
+        function fillRegs() {
+            const l = regs.filter(r => (!rev || String(r.eventId) === rev) && (`${r.name} ${r.email} ${r.college}`).toLowerCase().includes(rq.toLowerCase()));
+            $('#rt').innerHTML = `<table><tr><th>Student</th><th>Email</th><th>College / year</th><th>Phone</th><th>Event</th><th></th></tr>${l.map(r => { const e = events.find(x => x.id === r.eventId); return `<tr><td><b>${esc(r.name)}</b></td><td>${esc(r.email)}</td><td>${esc(r.college)}</td><td>${esc(r.phone)}</td><td>${esc(e ? e.name : 'Deleted event')}</td><td><button class="btn s d" data-rdel="${r.id}">Remove</button></td></tr>` }).join('') || '<tr><td colspan="6">No registrations found.</td></tr>'}</table>`
+        }
+
+        function modal(html) { $('#layer').innerHTML = `<div class="modal" id="m"><div role="dialog" aria-modal="true">${html}</div></div>`; $('#m').onclick = e => { if (e.target.id === 'm' || e.target.dataset.close !== undefined) close() }; const f = $('#m input'); f && f.focus() }
+        const close = () => $('#layer').innerHTML = '';
+        function toast(t) { const d = document.createElement('div'); d.className = 'toast'; d.textContent = t; document.body.append(d); setTimeout(() => d.remove(), 2400) }
+
+        function regForm(id) {
+            const e = events.find(x => x.id === id); const f = fmt(e);
+            modal(`<h2>Register</h2><p style="color:var(--mute);margin:0">${esc(e.name)} · ${f.full}</p>
+ <label for="rn">Full name</label><input id="rn" autocomplete="name"><div class="err" data-e="rn"></div>
+ <label for="re">Email</label><input id="re" type="email" autocomplete="email"><div class="err" data-e="re"></div>
+ <div class="row"><div><label for="rc">College</label><input id="rc"><div class="err" data-e="rc"></div></div><div><label for="ry">Year</label><select id="ry"><option>1st year</option><option>2nd year</option><option>3rd year</option><option>4th year</option><option>Postgraduate</option></select></div></div>
+ <label for="rp">Phone number</label><input id="rp" type="tel" autocomplete="tel" placeholder="10-digit number"><div class="err" data-e="rp"></div>
+ <div class="acts"><button class="btn" data-close>Cancel</button><button class="btn p" id="sub">Submit registration</button></div>`);
+            $('#sub').onclick = () => {
+                const v = k => $('#' + k).value.trim(); const er = {};
+                if (v('rn').length < 2) er.rn = 'Enter your full name.';
+                if (!/^\S+@\S+\.\S+$/.test(v('re'))) er.re = 'Enter a valid email address.';
+                if (!v('rc')) er.rc = 'Enter your college.';
+                if (!/^\+?\d[\d\s-]{8,13}$/.test(v('rp'))) er.rp = 'Enter a valid phone number.';
+                else if (regs.some(r => r.eventId === id && r.email.toLowerCase() === v('re').toLowerCase())) er.re = 'This email is already registered for this event.';
+                document.querySelectorAll('[data-e]').forEach(d => d.textContent = er[d.dataset.e] || '');
+                if (Object.keys(er).length) return;
+                regs.push({ id: Date.now(), eventId: id, name: v('rn'), email: v('re'), college: v('rc') + ', ' + $('#ry').value, phone: v('rp') }); save(); close(); toast('Registered. See you at the event!'); route()
+            }
+        }
+
+        function eventForm(id) {
+            const e = events.find(x => x.id === id) || { name: '', date: day(7), time: '10:00', venue: '', cat: CATS[0], desc: '', featured: false };
+            modal(`<h2>${id ? 'Edit event' : 'Add event'}</h2>
+ <label for="en">Event name</label><input id="en" value="${esc(e.name)}">
+ <div class="row"><div><label for="ed">Date</label><input id="ed" type="date" value="${e.date}"></div><div><label for="et">Time</label><input id="et" type="time" value="${e.time}"></div></div>
+ <div class="row"><div><label for="ev">Venue</label><input id="ev" value="${esc(e.venue)}"></div><div><label for="ec">Category</label><select id="ec">${CATS.map(c => `<option ${c === e.cat ? 'selected' : ''}>${c}</option>`).join('')}</select></div></div>
+ <label for="eo">Description</label><textarea id="eo" rows="3">${esc(e.desc)}</textarea>
+ <label style="display:flex;gap:8px;align-items:center"><input id="ef" type="checkbox" style="width:auto" ${e.featured ? 'checked' : ''}> Show as featured event on Home</label>
+ <div class="err" id="ee"></div><div class="acts"><button class="btn" data-close>Cancel</button><button class="btn p" id="se">Save event</button></div>`);
+            $('#se').onclick = () => {
+                const v = k => $('#' + k).value.trim();
+                if (!v('en') || !v('ed') || !v('et') || !v('ev')) return $('#ee').textContent = 'Name, date, time and venue are required.';
+                const n = { id: id || Date.now(), name: v('en'), date: v('ed'), time: v('et'), venue: v('ev'), cat: v('ec'), desc: v('eo'), featured: $('#ef').checked };
+                if (n.featured) events.forEach(x => x.featured = false);
+                events = id ? events.map(x => x.id === id ? n : x) : [...events, n]; save(); close(); toast(id ? 'Event saved' : 'Event added'); route()
+            }
+        }
+
+        function route() {
+            const r = (location.hash.replace('#/', '') || '').split('/')[0];
+            document.querySelectorAll('nav a').forEach(a => a.classList.toggle('on', a.dataset.r === r));
+            $('#app').innerHTML = r === 'events' ? eventsPage() : r === 'admin' ? adminPage() : home();
+            if (r === 'events') fillList();
+            if (r === 'admin' && admin && adminTab === 'regs') fillRegs();
+            window.scrollTo(0, 0)
+        }
+
+        document.addEventListener('click', e => {
+            const t = e.target.closest('button'); if (!t) return; const d = t.dataset;
+            if (d.reg) regForm(+d.reg);
+            if (d.cat) { cat = d.cat; route() }
+            if (d.tab) { adminTab = d.tab; route() }
+            if (d.edit) eventForm(+d.edit);
+            if (t.id === 'add') eventForm();
+            if (d.del) { const ev = events.find(x => x.id === +d.del); modal(`<h2>Delete event?</h2><p>“${esc(ev.name)}” and its ${count(ev.id)} registration(s) will be removed.</p><div class="acts"><button class="btn" data-close>Keep event</button><button class="btn d" id="cd">Delete event</button></div>`); $('#cd').onclick = () => { events = events.filter(x => x.id !== ev.id); regs = regs.filter(r => r.eventId !== ev.id); save(); close(); toast('Event deleted'); route() } }
+            if (d.rdel) { regs = regs.filter(r => r.id !== +d.rdel); save(); toast('Registration removed'); route() }
+            if (t.id === 'go') { if ($('#pw').value === 'admin123') { admin = true; route() } else $('#pe').textContent = 'Incorrect passcode.' }
+            if (t.id === 'out') { admin = false; route() }
+        });
+        document.addEventListener('input', e => {
+            const i = e.target.id;
+            if (i === 'q') { q = e.target.value; fillList() }
+            if (i === 'rq') { rq = e.target.value; fillRegs() }
+        });
+        document.addEventListener('change', e => {
+            const i = e.target.id;
+            if (i === 'cat') { cat = e.target.value; route() }
+            if (i === 'rev') { rev = e.target.value; fillRegs() }
+        });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); if (e.key === 'Enter' && e.target.id === 'pw') $('#go').click() });
+        window.addEventListener('hashchange', route); route();
+    </script>
+</body>
+
+</html>
